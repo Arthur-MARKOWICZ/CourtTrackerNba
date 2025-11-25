@@ -83,4 +83,12 @@ public class Users implements UserDetails {
     public boolean isEnabled() {
         return isActive;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
