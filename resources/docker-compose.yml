@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgresql_CourtTrackerNba
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: nba
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./banco_de_dados/postgres-data:/var/lib/postgresql/data
+    networks:
+      - courttrackerNba-net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+networks:
+  courttrackerNba-net:
+    driver: bridge

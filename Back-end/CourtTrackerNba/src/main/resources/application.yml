@@ -1,10 +1,10 @@
 spring:
   config:
-    import: optional:file:../../resources/.env
-    datasource:
-        url: ${DB_URL}
-        username: ${DB_USERNAME}
-        password: ${DB_PASSWORD}
-  jwt:
-    secret: ${JWT_SECRET}
-    expiration: 3600000
+    import: optional:file:.env
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 3600000
