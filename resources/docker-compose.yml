@@ -13,11 +13,7 @@ services:
       - ./banco_de_dados/postgres-data:/var/lib/postgresql/data
     networks:
       - courttrackerNba-net
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME}" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+   
 networks:
   courttrackerNba-net:
     driver: bridge
