@@ -19,22 +19,5 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    @PostMapping
-    public ResponseEntity<Users> create(@RequestBody UsersCreatDto dto){
-        logger.info("action=create_user_request, email={}", userService.maskEmail(dto.email()));
 
-        try {
-            Users user = userService.create(dto);
-
-            logger.info("action=create_user_success, userId={}, email={}",
-                    user.getId(), userService.maskEmail(user.getEmail()));
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(user);
-
-        } catch (Exception e) {
-            logger.error("action=create_user_error, email={}, error={}",
-                    userService.maskEmail(dto.email()), e.getMessage(), e);
-            throw e;
-        }
-    }
 }

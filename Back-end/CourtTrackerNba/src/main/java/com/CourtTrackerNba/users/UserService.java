@@ -15,46 +15,11 @@ import java.time.LocalDateTime;
 public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder;
     private final TokenService tokenService;
-    public UserService(UserRepository userRepository, BCryptPasswordEncoder encoder, TokenService tokenService) {
+    public UserService(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
-        this.encoder = encoder;
         this.tokenService = tokenService;
-    }
-    public Users create(UsersCreatDto dto){
-        logger.debug("action=create_user_start, email={}", maskEmail(dto.email()));
-
-
-        if (userRepository.existsByEmail(dto.email())) {
-            logger.warn("action=create_user_validation_failed, reason=email_exists, email={}",
-                    maskEmail(dto.email()));
-            throw new UserAlreadyExistsException("Email already registered");
-        }
-
-
-        String passwordEncode = encoder.encode(dto.password());
-        Users user = new Users();
-        user.setEmail(dto.email());
-        user.setPassword(passwordEncode);
-        user.setUsername(dto.username());
-        user.setCreated(LocalDateTime.now());
-        user.setActive(true);
-        user.setUpdated(LocalDateTime.now());
-
-        logger.debug("action=save_user_db, email={}", maskEmail(dto.email()));
-        userRepository.save(user);
-
-        logger.info("action=create_user_complete, userId={}, username={}",
-                user.getId(), user.getUsername());
-
-        return user;
 
     }
-    public String maskEmail(String email) {
-        if (email == null) return "null";
-        int atIndex = email.indexOf('@');
-        if (atIndex <= 1) return "***" + email.substring(atIndex);
-        return email.substring(0, 2) + "***" + email.substring(atIndex);
-    }
+
 }
